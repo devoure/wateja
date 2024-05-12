@@ -27,7 +27,7 @@ def index(request):
 @api_view(['GET'])
 def get_customers(request):
     try:
-        customers = Customer.objects.all()
+        customers = Customer.objects.select_related("business")
         serializer = CustomerSerializer(customers, many=True)
         return Response(serializer.data)
 
@@ -42,7 +42,7 @@ def get_customers(request):
 @api_view(['GET'])
 def get_customer_detail(request, uuid):
     try:
-        customer = Customer.objects.get(id=uuid)
+        customer = Customer.objects.select_related("business").get(id=uuid)
         serializer = CustomerSerializer(customer, many=False)
 
         return Response(serializer.data)

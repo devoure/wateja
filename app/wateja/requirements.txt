@@ -2,3 +2,5 @@ django
 djangorestframework
 django-countries
 python-dateutil
+django-phonenumber-field[phonenumberslite]
+django-debug-toolbar

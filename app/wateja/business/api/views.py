@@ -34,7 +34,8 @@ def index(request):
 @api_view(['GET'])
 def get_businesses(request):
     try:
-        businesses = Business.objects.all()
+        # use select_related on one to many relationship query to reduce number of queries to db
+        businesses = Business.objects.select_related('category')
         serializer = BusinessSerializer(businesses, many=True)
         return Response(serializer.data)
 
@@ -49,7 +50,8 @@ def get_businesses(request):
 @api_view(['GET'])
 def get_business_detail(request, uuid):
     try:
-        business = Business.objects.get(id=uuid)
+        # use select_related on one to many relationship query to reduce number of queries to db
+        business = Business.objects.select_related('category').get(id=uuid)
         serializer = BusinessSerializer(business, many=False)
 
         # Add all customers in the business
@@ -76,7 +78,7 @@ def add_business(request):
             # Else return the error
             errors = serializer.errors
             return Response(errors,
-                        status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(serializer.data)
     # Provide a 500 response incase of errors in the above code
@@ -150,7 +152,7 @@ def get_business_category_detail(request, uuid):
 
         # Add all business in the category
 
-        businesses = Business.objects.filter(category=category.id)
+        businesses = Business.objects.filter(category=category.id).select_related("category")
         businesses_serializer = BusinessSerializer(businesses, many=True)
         return Response({"Category": serializer.data,
                          "Businesses": businesses_serializer.data})

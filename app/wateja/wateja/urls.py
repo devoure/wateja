@@ -23,5 +23,8 @@ urlpatterns = [
     path("wateja/v1/business/", include('business.api.urls')),
 
     # Root endpoint for customers app
-    path("wateja/v1/customers/", include('customers.api.urls'))
+    path("wateja/v1/customers/", include('customers.api.urls')),
+
+    # Django toolbar url
+    path("__debug__/", include("debug_toolbar.urls"))
 ]
