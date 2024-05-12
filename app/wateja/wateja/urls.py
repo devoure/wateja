@@ -20,7 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     # Root endpoint for business app
-    # path("wateja/v1/business/", include('business.urls')),
+    path("wateja/v1/business/", include('business.api.urls')),
 
     # Root endpoint for customers app
     # path("wateja/v1/customers/", include('customers.urls'))

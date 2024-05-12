@@ -6,6 +6,7 @@ from django_countries.fields import CountryField
 # relativedelta to calculate interval between two dates
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
+from pytz import timezone
 
 
 # Create your models here.
@@ -46,7 +47,9 @@ class Business(models.Model):
     @property
     def age(self):
         # get the interval of time in years between registration date of company to the current time
-        return relativedelta(self.registrationDate, datetime.now()).years
+        # apply astimezone to add timezone to datetime object (fixes oofset-naive and offset-aware error)
+        return relativedelta(datetime.now().astimezone(timezone('UTC')),
+                             self.registrationDate).years
 
     class Meta:
         verbose_name_plural = "businesses"
