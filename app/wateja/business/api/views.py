@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+from django.views.decorators.cache import cache_page
+
 from business.models import Business, Category
 from .serializers import BusinessSerializer, CategorySerializer
 
@@ -32,6 +34,8 @@ def index(request):
 # Function to handle a GET Request to endpoint "http://wateja/v1/business/business-list"
 # Returns a list of businesses in the app
 @api_view(['GET'])
+# Add caching for this view, 15 minutes cache
+@cache_page(60 * 15)
 def get_businesses(request):
     try:
         # use select_related on one to many relationship query to reduce number of queries to db
@@ -48,6 +52,7 @@ def get_businesses(request):
 # Function to handle a GET Request to endpoint "http://wateja/v1/business/business-detail/uuid"
 # Returns a detailed view of a particular business with uuid passed.
 @api_view(['GET'])
+@cache_page(60 + 15)
 def get_business_detail(request, uuid):
     try:
         # use select_related on one to many relationship query to reduce number of queries to db
@@ -130,6 +135,7 @@ def delete_business(request, uuid):
 # Function to handle a GET Request to endpoint "http://wateja/v1/business/business-cat-list"
 # Returns a list of businesses categories in the app
 @api_view(['GET'])
+@cache_page(60 + 15)
 def get_business_categories(request):
     try:
         categories = Category.objects.all()
@@ -144,6 +150,7 @@ def get_business_categories(request):
 
 # Function to handle a GET Request to endpoint "http://wateja/v1/business/business-cat-detail/uuid"
 # Returns a detailed view of a particular category with uuid passed.
+@cache_page(60 + 15)
 @api_view(['GET'])
 def get_business_category_detail(request, uuid):
     try:

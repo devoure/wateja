@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+from django.views.decorators.cache import cache_page
+
 from customers.models import Customer
 from customers.api.serializers import CustomerSerializer
 
@@ -25,6 +27,7 @@ def index(request):
 # Function to handle a GET Request to endpoint "http://wateja/v1/customers/customers-list"
 # Returns a list of customers in the app
 @api_view(['GET'])
+@cache_page(60 * 15)
 def get_customers(request):
     try:
         customers = Customer.objects.select_related("business")
@@ -40,6 +43,7 @@ def get_customers(request):
 # Function to handle a GET Request to endpoint "http://wateja/v1/customers/customer-detail/uuid"
 # Returns a detailed view of a particular customer with uuid passed.
 @api_view(['GET'])
+@cache_page(60 * 15)
 def get_customer_detail(request, uuid):
     try:
         customer = Customer.objects.select_related("business").get(id=uuid)
