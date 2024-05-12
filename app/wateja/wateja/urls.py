@@ -23,5 +23,5 @@ urlpatterns = [
     path("wateja/v1/business/", include('business.api.urls')),
 
     # Root endpoint for customers app
-    # path("wateja/v1/customers/", include('customers.urls'))
+    path("wateja/v1/customers/", include('customers.api.urls'))
 ]

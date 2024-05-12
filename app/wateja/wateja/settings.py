@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 
     # Pip installed apps
     "django_countries",
-    "rest_framework"
+    "rest_framework",
+    "phonenumber_field"
 ]
 
 MIDDLEWARE = [
