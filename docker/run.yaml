@@ -13,3 +13,15 @@ services:
       - REDIS_PASSWORD=my-password
       - REDIS_PORT=6379
       - REDIS_DATABASES=16
+  backend:
+    build:
+      context: ../app/.
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../app/wateja:/api
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DEBUG=1
+    depends_on:
+      - redis
