@@ -49,7 +49,7 @@ Implemented optimization techniques to make the solution more efficient.
 ## 🔧 Code Setup
    1. Clone the repo
         ```bash
-            git clone https://github.com/devoure/wateja
+            git clone https://github.com/devoure/wateja.git
 
         ```
 ## 💻🏃‍♂️ Running Code Snippet
